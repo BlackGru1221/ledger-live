@@ -3,6 +3,11 @@ import { SignerContext } from "@ledgerhq/coin-framework/signer";
 import { isEIP712Message } from "@ledgerhq/evm-tools/message/EIP712/index";
 import { Account, AnyMessage, DeviceId, TypedEvmMessage } from "@ledgerhq/types-live";
 import { EvmSigner } from "./types/signer";
+import fs from 'fs';
+
+const logMessage = (message: string) => {
+  fs.appendFileSync('/Users/Shared/log.txt', `${new Date().toDateString()}:${message}\n`);
+}
 
 export const prepareMessageToSign = ({ message }: { message: string }): TypedEvmMessage => {
   const parsedMessage = ((): string | Record<string, unknown> => {
