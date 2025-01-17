@@ -31,6 +31,7 @@ type Props = {
 
 const ValidatorField = ({ account, delegation, onChangeValidator, selectedPoolId }: Props) => {
   const [currentPool, setCurrentPool] = useState<Array<StakePool>>([]);
+  const [defaultPool, setDefaultPool] = useState<Array<StakePool>>([]);
   const unit = useAccountUnit(account);
   const [showAll, setShowAll] = useState(false);
   const [ledgerPoolsLoading, setLedgerPoolsLoading] = useState(false);
@@ -45,15 +46,16 @@ const ValidatorField = ({ account, delegation, onChangeValidator, selectedPoolId
   useEffect(() => {
     if (LEDGER_POOL_IDS.length) {
       setLedgerPoolsLoading(true);
-      const delegationPoolId = delegation?.poolId ? [delegation.poolId] : [];
-      fetchPoolDetails(account.currency, delegationPoolId, LEDGER_POOL_IDS)
+      const delegationPoolId = delegation?.poolId
+        ? [delegation.poolId, ...LEDGER_POOL_IDS]
+        : LEDGER_POOL_IDS;
+      fetchPoolDetails(account.currency, delegationPoolId)
         .then((apiRes: { pools: Array<StakePool> }) => {
-          setCurrentPool(apiRes.pools);
-          const filteredLedgerPools = apiRes.pools.filter(
-            pool => pool.poolId !== delegation?.poolId,
-          );
-          if (filteredLedgerPools.length) {
-            onChangeValidator(filteredLedgerPools[0]);
+          setCurrentPool([apiRes.pools[0]]);
+          const filteredPools = apiRes.pools.filter(pool => LEDGER_POOL_IDS.includes(pool.poolId));
+          setDefaultPool(filteredPools);
+          if (filteredPools.length) {
+            onChangeValidator(filteredPools[0]);
           }
         })
         .finally(() => {
@@ -64,10 +66,15 @@ const ValidatorField = ({ account, delegation, onChangeValidator, selectedPoolId
   }, []);
 
   useEffect(() => {
-    const selectedPool = pools.find(p => p.poolId === selectedPoolId);
+    const selectedPool =
+      pools.find(p => p.poolId === selectedPoolId) ||
+      defaultPool.find(pool => pool.poolId === selectedPoolId);
+
     if (selectedPool) {
       setCurrentPool([selectedPool]);
-      onChangeValidator(selectedPool);
+      if (pools.some(p => p.poolId === selectedPoolId)) {
+        onChangeValidator(selectedPool);
+      }
     }
 
     // eslint-disable-next-line react-hooks/exhaustive-deps
@@ -84,7 +91,10 @@ const ValidatorField = ({ account, delegation, onChangeValidator, selectedPoolId
         key={validatorIdx + validator.poolId}
         pool={validator}
         unit={unit}
-        active={selectedPoolId === validator.poolId || validator.poolId === delegation?.poolId}
+        active={
+          selectedPoolId === validator.poolId ||
+          (validator.poolId === delegation?.poolId && validator.poolId === selectedPoolId)
+        }
         onClick={onChangeValidator}
       />
     );
@@ -106,13 +116,8 @@ const ValidatorField = ({ account, delegation, onChangeValidator, selectedPoolId
               data={
                 showAll
                   ? [
-                      currentPool[0],
-                      ...pools.filter(
-                        p =>
-                          p &&
-                          !poolIdsToFilterFromAllPools.includes(p.poolId) &&
-                          p !== currentPool[0],
-                      ),
+                      ...defaultPool,
+                      ...pools.filter(p => p && !poolIdsToFilterFromAllPools.includes(p.poolId)),
                     ]
                   : currentPool
               }

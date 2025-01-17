@@ -320,9 +320,6 @@ export enum ScreenName {
   // ton
   TonEditComment = "TonEditComment",
 
-  // crypto_org
-  CryptoOrgEditMemo = "CryptoOrgEditMemo",
-
   // Algorand
   AlgorandEditMemo = "AlgorandEditMemo",
   AlgorandClaimRewardsInfo = "AlgorandClaimRewardsInfo",
@@ -529,6 +526,7 @@ export enum ScreenName {
   LedgerSyncDeepLinkHandler = "LedgerSyncDeepLinkHandler",
 
   MockedAddAssetButton = "MockedAddAssetButton",
+  MockedWalletScreen = "MockedWalletScreen",
   GenericLandingPage = "GenericLandingPage",
 
   // Web3Hub
@@ -543,6 +541,7 @@ export enum ScreenName {
   SelectDevice = "SelectDevice",
   SelectAccounts = "SelectAccounts",
   ScanDeviceAccounts = "ScanDeviceAccounts",
+  AddAccountsWarning = "AddAccountsWarning",
 }
 
 export enum NavigatorName {

@@ -20,12 +20,23 @@ const StyledPressable = styled(Pressable)`
   column-gap: 12px;
 `;
 
-const AddAccountButton: React.FC = () => {
+type Props = {
+  sourceScreenName: string;
+  onClick?: () => void;
+  disabled?: boolean;
+  currency?: string;
+};
+
+const AddAccountButton: React.FC<Props> = ({ sourceScreenName, disabled, currency, onClick }) => {
   const { t } = useTranslation();
   const [isAddModalOpened, setAddModalOpened] = useState<boolean>(false);
 
   const openAddModal = () => {
-    track("button_clicked", { button: "add a new account", page: "Accounts" });
+    track("button_clicked", { button: "Add a new account", page: sourceScreenName, currency });
+    if (onClick) {
+      onClick();
+      return;
+    }
     setAddModalOpened(true);
   };
   const closeAddModal = () => setAddModalOpened(false);
@@ -33,8 +44,10 @@ const AddAccountButton: React.FC = () => {
   return (
     <>
       <StyledPressable
+        disabled={disabled}
         style={({ pressed }: { pressed: boolean }) => [
           { opacity: pressed ? 0.5 : 1.0, marginVertical: 12 },
+          disabled && { opacity: 0.5 },
         ]}
         hitSlop={6}
         onPress={openAddModal}

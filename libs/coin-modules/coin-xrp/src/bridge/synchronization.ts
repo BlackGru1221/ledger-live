@@ -63,7 +63,7 @@ async function filterOperations(
   address: string,
   blockHeight: number,
 ): Promise<Operation[]> {
-  const [operations, _] = await listOperations(address, { startAt: blockHeight });
+  const [operations, _] = await listOperations(address, { minHeight: blockHeight });
 
   return operations.map(
     op =>
@@ -74,7 +74,7 @@ async function filterOperations(
         type: op.simpleType,
         value: new BigNumber(op.value.toString()),
         fee: new BigNumber(op.fee.toString()),
-        blockHash: null,
+        blockHash: op.blockHash,
         blockHeight: op.blockHeight,
         senders: op.senders,
         recipients: op.recipients,

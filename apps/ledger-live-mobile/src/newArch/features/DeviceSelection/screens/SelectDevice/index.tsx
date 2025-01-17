@@ -1,12 +1,10 @@
-import React, { useCallback, useEffect, useState } from "react";
+import React, { useCallback } from "react";
 import { StyleSheet, SafeAreaView } from "react-native";
 import { Flex } from "@ledgerhq/native-ui";
-import type { Device } from "@ledgerhq/live-common/hw/actions/types";
-import { useIsFocused, useTheme } from "@react-navigation/native";
-import { prepareCurrency } from "~/bridge/cache";
+import { useTheme } from "@react-navigation/native";
 import { ScreenName } from "~/const";
 import { track } from "~/analytics";
-import SelectDevice2, { SetHeaderOptionsRequest } from "~/components/SelectDevice2";
+import DeviceSelector, { SetHeaderOptionsRequest } from "~/components/SelectDevice2";
 import DeviceActionModal from "~/components/DeviceActionModal";
 
 import {
@@ -15,9 +13,10 @@ import {
 } from "~/components/RootNavigator/types/helpers";
 import { NavigationHeaderCloseButtonAdvanced } from "~/components/NavigationHeaderCloseButton";
 import { NavigationHeaderBackButton } from "~/components/NavigationHeaderBackButton";
-import { useAppDeviceAction } from "~/hooks/deviceActions";
 import { DeviceSelectionNavigatorParamsList } from "../../types";
-import { NetworkBasedAddAccountNavigator } from "~/newArch/features/Accounts/screens/AddAccount/types";
+import { NetworkBasedAddAccountNavigator } from "LLM/features/Accounts/screens/AddAccount/types";
+import useSelectDeviceViewModel from "./useSelectDeviceViewModel";
+import SkipSelectDevice from "~/screens/SkipSelectDevice";
 
 // Defines some of the header options for this screen to be able to reset back to them.
 export const addAccountsSelectDeviceHeaderOptions = (
@@ -28,39 +27,17 @@ export const addAccountsSelectDeviceHeaderOptions = (
 });
 
 export default function SelectDevice({
-  navigation,
   route,
+  navigation,
 }: StackNavigatorProps<
   DeviceSelectionNavigatorParamsList & Partial<NetworkBasedAddAccountNavigator>,
   ScreenName.SelectDevice
 >) {
   const { currency } = route.params;
+  const { onResult, device, action, isFocused, onClose, setDevice } =
+    useSelectDeviceViewModel(route);
   const { colors } = useTheme();
-  const [device, setDevice] = useState<Device | null>(null);
-  const action = useAppDeviceAction();
-  const isFocused = useIsFocused();
-
-  const onClose = useCallback(() => {
-    setDevice(null);
-  }, []);
-
-  const onResult = useCallback(
-    // @ts-expect-error should be AppResult but navigation.navigate does not agree
-    meta => {
-      setDevice(null);
-      const arg = { ...route.params, ...meta };
-      navigation.navigate(ScreenName.ScanDeviceAccounts, arg);
-    },
-    [navigation, route],
-  );
-
-  useEffect(() => {
-    // load ahead of time
-    prepareCurrency(currency);
-  }, [currency]);
-
   const analyticsPropertyFlow = route.params?.analyticsPropertyFlow;
-
   const onHeaderCloseButton = useCallback(() => {
     track("button_clicked", {
       button: "Close 'x'",
@@ -85,7 +62,6 @@ export default function SelectDevice({
     },
     [navigation, onHeaderCloseButton],
   );
-
   return (
     <SafeAreaView
       style={[
@@ -95,12 +71,9 @@ export default function SelectDevice({
         },
       ]}
     >
-      {/* 
-          TODO: should be rendered only on receive flow context -> TO BE DONE After delivering the add account flow
-          <SkipSelectDevice route={route} onResult={setDevice} />
-      */}
+      <SkipSelectDevice route={route} onResult={setDevice} />
       <Flex px={16} py={8} flex={1}>
-        <SelectDevice2
+        <DeviceSelector
           onSelect={setDevice}
           stopBleScanning={!!device || !isFocused}
           requestToSetHeaderOptions={requestToSetHeaderOptions}

@@ -22,6 +22,10 @@ import { PasswordlockModal } from "./modal/passwordlock.modal";
 import { LockscreenPage } from "tests/page/lockscreen.page";
 import { NFTDrawer } from "./drawer/nft.drawer";
 import { NftGallery } from "./nftGallery.page";
+import { AssetPage } from "./asset.page";
+import { SettingsModal } from "tests/page/modal/settings.modal";
+import { OnboardingPage } from "tests/page/onboarding.page";
+import { OperationDrawer } from "./drawer/operation.drawer";
 
 export class Application extends PageHolder {
   public account = new AccountPage(this.page);
@@ -47,4 +51,8 @@ export class Application extends PageHolder {
   public LockscreenPage = new LockscreenPage(this.page);
   public nftDrawer = new NFTDrawer(this.page);
   public nftGallery = new NftGallery(this.page);
+  public assetPage = new AssetPage(this.page);
+  public settingsModal = new SettingsModal(this.page);
+  public onboarding = new OnboardingPage(this.page);
+  public operationDrawer = new OperationDrawer(this.page);
 }

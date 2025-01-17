@@ -1,12 +1,11 @@
 import { test } from "../../fixtures/common";
 import { Account } from "@ledgerhq/live-common/e2e/enum/Account";
 import { Fee } from "@ledgerhq/live-common/e2e/enum/Fee";
-import { OperationType } from "@ledgerhq/live-common/e2e/enum/OperationType";
-import { Transaction } from "../../models/Transaction";
+import { TransactionStatus } from "@ledgerhq/live-common/e2e/enum/TransactionStatus";
+import { Transaction } from "@ledgerhq/live-common/e2e/models/Transaction";
 import { addTmsLink, addBugLink } from "tests/utils/allureUtils";
 import { getDescription } from "../../utils/customJsonReporter";
 import { CLI } from "tests/utils/cliUtils";
-import { isRunningInScheduledWorkflow } from "tests/utils/githubUtils";
 import { getEnv } from "@ledgerhq/live-env";
 
 //Warning 🚨: XRP Tests may fail due to API HTTP 429 issue - Jira: LIVE-14237
@@ -195,6 +194,10 @@ const transactionE2E = [
     transaction: new Transaction(Account.XRP_1, Account.XRP_2, "0.0001", undefined, "noTag"),
     xrayTicket: "B2CQA-2816",
   },
+  {
+    transaction: new Transaction(Account.APTOS_1, Account.APTOS_2, "0.0001"),
+    xrayTicket: "B2CQA-2920",
+  },
 ];
 
 const tokenTransactionInvalid = [
@@ -215,10 +218,6 @@ const tokenTransactionInvalid = [
 ];
 
 test.describe("Send flows", () => {
-  test.beforeAll(async () => {
-    process.env.DISABLE_TRANSACTION_BROADCAST =
-      new Date().getDay() === 1 && isRunningInScheduledWorkflow() ? "0" : "1";
-  });
   //Warning 🚨: Test may fail due to the GetAppAndVersion issue - Jira: LIVE-12581 or insufficient funds
 
   for (const transaction of transactionE2E) {
@@ -277,8 +276,7 @@ test.describe("Send flows", () => {
           await app.sendDrawer.addressValueIsVisible(
             transaction.transaction.accountToCredit.address,
           );
-          await app.drawer.close();
-          // Todo: Update method => Check the receiver account only when we broadcast
+          await app.drawer.closeDrawer();
           if (!getEnv("DISABLE_TRANSACTION_BROADCAST")) {
             await app.layout.goToAccounts();
             await app.accounts.clickSyncBtnForAccount(
@@ -287,7 +285,7 @@ test.describe("Send flows", () => {
             await app.accounts.navigateToAccountByName(
               transaction.transaction.accountToCredit.accountName,
             );
-            await app.account.selectAndClickOnLastOperation(OperationType.RECEIVED);
+            await app.account.selectAndClickOnLastOperation(TransactionStatus.RECEIVED);
             await app.sendDrawer.expectReceiverInfos(transaction.transaction);
           }
         },
