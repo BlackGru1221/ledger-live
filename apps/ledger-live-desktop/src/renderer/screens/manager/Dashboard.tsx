@@ -122,29 +122,31 @@ const Dashboard = ({
           appsToRestore={appsToRestore}
           exec={exec}
           renderFirmwareUpdateBanner={({ disableFirmwareUpdate, installed }) => (
-            <FirmwareUpdate
-              device={device}
-              deviceInfo={deviceInfo}
-              firmware={firmware}
-              error={firmwareError}
-              setPreventResetOnDeviceChange={setPreventResetOnDeviceChange}
-              disableFirmwareUpdate={disableFirmwareUpdate}
-              installed={installed}
-              onReset={onReset}
-              openFirmwareUpdate={openFirmwareUpdate}
-            />
+            // <FirmwareUpdate
+            //   device={device}
+            //   deviceInfo={deviceInfo}
+            //   firmware={firmware}
+            //   error={firmwareError}
+            //   setPreventResetOnDeviceChange={setPreventResetOnDeviceChange}
+            //   disableFirmwareUpdate={disableFirmwareUpdate}
+            //   installed={installed}
+            //   onReset={onReset}
+            //   openFirmwareUpdate={openFirmwareUpdate}
+            // />
+            <></>
           )}
         />
       ) : (
-        <FirmwareUpdate
-          device={device}
-          deviceInfo={deviceInfo}
-          firmware={firmware}
-          error={firmwareError}
-          setPreventResetOnDeviceChange={setPreventResetOnDeviceChange}
-          onReset={onReset}
-          openFirmwareUpdate={openFirmwareUpdate}
-        />
+        // <FirmwareUpdate
+        //   device={device}
+        //   deviceInfo={deviceInfo}
+        //   firmware={firmware}
+        //   error={firmwareError}
+        //   setPreventResetOnDeviceChange={setPreventResetOnDeviceChange}
+        //   onReset={onReset}
+        //   openFirmwareUpdate={openFirmwareUpdate}
+        // />
+        <></>
       )}
     </Box>
   );

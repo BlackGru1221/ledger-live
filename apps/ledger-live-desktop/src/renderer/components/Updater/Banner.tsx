@@ -58,12 +58,13 @@ const CONTENT_BY_STATUS = (
   "update-available": {
     Icon: IconUpdate,
     message: (
-      <Trans
-        i18nKey="update.updateAvailable"
-        values={{
-          version,
-        }}
-      />
+      // <Trans
+      //   i18nKey="update.updateAvailable"
+      //   values={{
+      //     version,
+      //   }}
+      // />
+      <></>
     ),
   },
   error: {

@@ -313,9 +313,10 @@ const AppsScreen = ({
           onLanguageChange={onLanguageChange}
         >
           {showFwUpdateBanner ? (
-            <Flex p={6} pb={0}>
-              <FirmwareUpdateBanner onBackFromUpdate={onBackFromUpdate} />
-            </Flex>
+            // <Flex p={6} pb={0}>
+            //   <FirmwareUpdateBanner onBackFromUpdate={onBackFromUpdate} />
+            // </Flex>
+            <></>
           ) : null}
         </DeviceCard>
         <ProviderWarning />

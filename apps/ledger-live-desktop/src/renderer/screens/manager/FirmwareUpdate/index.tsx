@@ -165,51 +165,53 @@ const FirmwareUpdate = (props: Props) => {
   if (!firmware) {
     if (!isDeprecated) return null;
     return (
-      <FirmwareUpdateBanner
-        old
-        right={
-          <Button variant="main" onClick={() => openURL(contactSupportUrl)}>
-            <Trans i18nKey="manager.firmware.banner.old.cta" />
-          </Button>
-        }
-      />
+      // <FirmwareUpdateBanner
+      //   old
+      //   right={
+      //     <Button variant="main" onClick={() => openURL(contactSupportUrl)}>
+      //       <Trans i18nKey="manager.firmware.banner.old.cta" />
+      //     </Button>
+      //   }
+      // />
+      <></>
     );
   }
 
   return (
-    <FirmwareUpdateBanner
-      right={
-        <Box alignItems={"flex-end"} horizontal>
-          {manager.firmwareUpdateRequiresUserToUninstallApps(device.modelId, deviceInfo) && (
-            <Box px={4} horizontal alignItems="center" color="palette.primary.contrastText">
-              <IconInfoCircle size={12} />
-              <Text
-                style={{
-                  marginLeft: 6,
-                }}
-                ff="Inter"
-                fontSize={4}
-              >
-                <Trans i18nKey="manager.firmware.removeApps" />
-              </Text>
-            </Box>
-          )}
-          <Button
-            variant="main"
-            data-testid="manager-update-firmware-button"
-            disabled={!!disableFirmwareUpdate}
-            onClick={() => {
-              track("Manager Firmware Update Click", {
-                firmwareName: firmware.final.name,
-              });
-              onOpenDrawer();
-            }}
-          >
-            <Trans i18nKey="manager.firmware.banner.cta2" />
-          </Button>
-        </Box>
-      }
-    />
+    // <FirmwareUpdateBanner
+    //   right={
+    //     <Box alignItems={"flex-end"} horizontal>
+    //       {manager.firmwareUpdateRequiresUserToUninstallApps(device.modelId, deviceInfo) && (
+    //         <Box px={4} horizontal alignItems="center" color="palette.primary.contrastText">
+    //           <IconInfoCircle size={12} />
+    //           <Text
+    //             style={{
+    //               marginLeft: 6,
+    //             }}
+    //             ff="Inter"
+    //             fontSize={4}
+    //           >
+    //             <Trans i18nKey="manager.firmware.removeApps" />
+    //           </Text>
+    //         </Box>
+    //       )}
+    //       <Button
+    //         variant="main"
+    //         data-testid="manager-update-firmware-button"
+    //         disabled={!!disableFirmwareUpdate}
+    //         onClick={() => {
+    //           track("Manager Firmware Update Click", {
+    //             firmwareName: firmware.final.name,
+    //           });
+    //           onOpenDrawer();
+    //         }}
+    //       >
+    //         <Trans i18nKey="manager.firmware.banner.cta2" />
+    //       </Button>
+    //     </Box>
+    //   }
+    // />
+    <></>
   );
 };
 

@@ -29,11 +29,10 @@ const border = (p: ThemedStyledProps<ContainerProps, DefaultTheme>) =>
     ? `1px solid ${p.theme.colors.alertRed}`
     : p.isConfirmed
       ? 0
-      : `1px solid ${
-          p.type === "IN" || p.type === "NFT_IN"
-            ? p.theme.colors.warning
-            : rgba(p.theme.colors.palette.text.shade60, 0.2)
-        }`;
+      : `1px solid ${p.type === "IN" || p.type === "NFT_IN"
+        ? p.theme.colors.warning
+        : rgba(p.theme.colors.palette.text.shade60, 0.2)
+      }`;
 function inferColor(p: ThemedStyledProps<ContainerProps, DefaultTheme>) {
   switch (p.type) {
     case "IN":
@@ -64,7 +63,7 @@ export const Container = styled(Box).attrs<ContainerProps>(p => ({
   color: p.hasFailed ? p.theme.colors.alertRed : inferColor(p),
   alignItems: "center",
   justifyContent: "center",
-}))<ContainerProps>`
+})) <ContainerProps>`
   border: ${border};
   border-radius: 50%;
   position: relative;

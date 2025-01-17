@@ -54,23 +54,24 @@ const FirmwareUpdateBanner = ({ old, right }: { old?: boolean; right?: React.Rea
       }}
       content={{
         message: (
-          <Box>
-            <Text fontFamily="Inter|Bold" fontSize={5} color="neutral.c100">
-              {t(old ? "manager.firmware.banner.old.warning" : "manager.firmware.banner.warning")}
-            </Text>
-            {old ? null : (
-              <Text color="neutral.c90">
-                {t("manager.firmware.banner.version", {
-                  latestFirmware: visibleFirmwareVersion,
-                })}
-              </Text>
-            )}
-          </Box>
-        ),
-        right: right || (
-          <Button variant="main" onClick={onClick}>
-            {t("manager.firmware.banner.cta")}
-          </Button>
+        //   <Box>
+        //     <Text fontFamily="Inter|Bold" fontSize={5} color="neutral.c100">
+        //       {t(old ? "manager.firmware.banner.old.warning" : "manager.firmware.banner.warning")}
+        //     </Text>
+        //     {old ? null : (
+        //       <Text color="neutral.c90">
+        //         {t("manager.firmware.banner.version", {
+        //           latestFirmware: visibleFirmwareVersion,
+        //         })}
+        //       </Text>
+        //     )}
+        //   </Box>
+        // ),
+        // right: right || (
+        //   <Button variant="main" onClick={onClick}>
+        //     {t("manager.firmware.banner.cta")}
+        //   </Button>
+        <></>
         ),
       }}
     />
@@ -85,9 +86,10 @@ const FirmwareUpdateBannerEntry = ({ old, right }: { old?: boolean; right?: Reac
   }
 
   return (
-    <StyleProvider selectedPalette="dark">
-      <FirmwareUpdateBanner old={old} right={right} />
-    </StyleProvider>
+    // <StyleProvider selectedPalette="dark">
+    //   <FirmwareUpdateBanner old={old} right={right} />
+    // </StyleProvider>
+    <></>
   );
 };
 

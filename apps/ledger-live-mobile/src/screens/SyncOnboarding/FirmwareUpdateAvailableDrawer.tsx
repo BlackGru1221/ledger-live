@@ -32,30 +32,30 @@ const FirmwareUpdateAvailableDrawer: React.FC<Props> = ({
   const { t } = useTranslation();
 
   return (
-    <QueuedDrawer onClose={onClose} isRequestingToBeOpened={isOpen} preventBackdropClick>
-      <Flex justifyContent="center" alignItems="center">
-        <GenericInformationBody
-          Icon={Icons.InformationFill}
-          iconColor="primary.c80"
-          title={t("earlySecurityCheck.firmwareUpdateAvailableDrawer.title", { productName })}
-          description={
-            <>
-              {t("earlySecurityCheck.firmwareUpdateAvailableDrawer.descriptionVersion", {
-                firmwareVersion,
-              })}
-              {"\n"}
-              {t("earlySecurityCheck.firmwareUpdateAvailableDrawer.description", { productName })}
-            </>
-          }
-        />
-      </Flex>
-      <Button mt={8} mb={7} type="main" onPress={onUpdate} size={"large"}>
-        {t("earlySecurityCheck.firmwareUpdateAvailableDrawer.updateCta")}
-      </Button>
-      <Link onPress={onUpdate} size={"large"} Icon={IconsLegacy.ExternalLinkMedium}>
-        {t("earlySecurityCheck.firmwareUpdateAvailableDrawer.seeWhatsInUpdateCta")}
-      </Link>
-    </QueuedDrawer>
+    // <QueuedDrawer onClose={onClose} isRequestingToBeOpened={isOpen} preventBackdropClick>
+    //   <Flex justifyContent="center" alignItems="center">
+    //     <GenericInformationBody
+    //       Icon={Icons.InformationFill}
+    //       iconColor="primary.c80"
+    //       title={t("earlySecurityCheck.firmwareUpdateAvailableDrawer.title", { productName })}
+    //       description={
+    //         <>
+    //           {t("earlySecurityCheck.firmwareUpdateAvailableDrawer.descriptionVersion", {
+    //             firmwareVersion,
+    //           })}
+    //           {"\n"}
+    //           {t("earlySecurityCheck.firmwareUpdateAvailableDrawer.description", { productName })}
+    //         </>
+    //       }
+    //     />
+    //   </Flex>
+    //   <Button mt={8} mb={7} type="main" onPress={onUpdate} size={"large"}>
+    //     {t("earlySecurityCheck.firmwareUpdateAvailableDrawer.updateCta")}
+    //   </Button>
+    //   <Link onPress={onUpdate} size={"large"} Icon={IconsLegacy.ExternalLinkMedium}>
+    //     {t("earlySecurityCheck.firmwareUpdateAvailableDrawer.seeWhatsInUpdateCta")}
+    //   </Link>
+    // </QueuedDrawer>
   );
 };
 

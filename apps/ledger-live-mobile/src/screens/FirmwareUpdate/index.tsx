@@ -894,14 +894,15 @@ export default function FirmwareUpdateScreen({ route: { params } }: NavigationPr
     return null;
   }
   return (
-    <Flex flex={1}>
-      <FirmwareUpdate
-        deviceInfo={params.deviceInfo}
-        device={params.device}
-        firmwareUpdateContext={params.firmwareUpdateContext}
-        onBackFromUpdate={params.onBackFromUpdate}
-        isBeforeOnboarding={params.isBeforeOnboarding}
-      />
-    </Flex>
+    // <Flex flex={1}>
+    //   <FirmwareUpdate
+    //     deviceInfo={params.deviceInfo}
+    //     device={params.device}
+    //     firmwareUpdateContext={params.firmwareUpdateContext}
+    //     onBackFromUpdate={params.onBackFromUpdate}
+    //     isBeforeOnboarding={params.isBeforeOnboarding}
+    //   />
+    // </Flex>
+    <></>
   );
 }

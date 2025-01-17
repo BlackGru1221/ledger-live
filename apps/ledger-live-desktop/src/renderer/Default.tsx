@@ -328,8 +328,8 @@ export default function Default() {
                           <MainSideBar />
                           <Page>
                             <TopBannerContainer>
-                              <UpdateBanner />
-                              <FirmwareUpdateBanner />
+                              {/* <UpdateBanner /> */}
+                              {/* <FirmwareUpdateBanner /> */}
                               <VaultSignerBanner />
                             </TopBannerContainer>
                             <Switch>
